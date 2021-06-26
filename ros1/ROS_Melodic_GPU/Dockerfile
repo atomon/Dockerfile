@@ -1,12 +1,20 @@
-#### Install ROS1(melodic) on ubuntu18.04 ####
-## docker build option: --build-arg ros1_ver="noetic"
-## docker run -it --name ROS_Melodic_GPU_Sim  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 --gpus all my/ros-gpu:melodic /bin/bash
+#######################################################################################################################################################################################
+###  Install ROS1(melodic) on ubuntu18.04 ###
+#
+## build
+# $ docker build -t my/ros-gpu:melodic .
+#
+## run
+# $ docker run -it --name ROS_Melodic_GPU  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 --gpus all my/ros-gpu:melodic /bin/bash
+#
+#######################################################################################################################################################################################
+
 
 
 FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu18.04
 
-ARG ros1_ver=melodic
-ENV ROS_DISTRO=$ros1_ver
+
+ENV ROS_DISTRO=melodic
 ENV DEBIAN_FRONTEND=noninteractive
 
 ### ROS1 Install ###
@@ -49,3 +57,7 @@ WORKDIR /home/ros1_ws
 #source ~/ros1_ws/devel/setup.bash
 
 #RUN rm -rf /var/lib/apt/lists/*
+
+
+## docker build option: --build-arg ros1_ver=noetic and --build-arg ubuntu_ver=20.04
+# $ docker build -t my/ros-gpu:noetic --build-arg ros1_ver=noetic --build-arg ubuntu_ver=20.04 .
