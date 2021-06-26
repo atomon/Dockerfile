@@ -15,7 +15,7 @@ This is for building a Jetson based ROS_Melodic enviroment.
     To run a docker container based on my/image:
     ```bash:bash
     $ docker run -it \
-                 --name ROS_Melodic_Study \
+                 --name ROS_Melodic_5.0 \
                  --runtime nvidia \
                  --privileged \
                  --net=host \

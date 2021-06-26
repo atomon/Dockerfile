@@ -11,6 +11,7 @@ ROS2 distribution supports Dashing and Foxy.
     ```bash:bash
     $ docker build -t my/ros:foxy_gpu Dockerfile/ros2/ROS_GPU
     ```
+    &nbsp;&nbsp;or  
     To build the ROS-dashing(option):
     ```bash:bash
     $ docker build -t my/ros:dashing_gpu \
