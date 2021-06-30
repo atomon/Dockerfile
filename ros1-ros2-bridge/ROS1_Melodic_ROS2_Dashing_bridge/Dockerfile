@@ -7,7 +7,9 @@ ARG ros1_ver=melodic
 ARG ros2_ver=dashing
 
 ### ROS1 Install ###
-RUN apt update && apt upgrade && \
+RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
+    echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+    apt update && apt upgrade && \
     export ROS_DISTRO=ros1_ver && \
     apt install -y git tmux vim lsb-release curl gnupg2
 
