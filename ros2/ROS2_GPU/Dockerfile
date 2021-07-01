@@ -24,7 +24,9 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 
 #RUN locale  ## check for UTF-8  https://hub.docker.com/r/nvidia/opengl
-RUN apt update && apt install locales && \
+RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
+    echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+	apt update && apt install locales && \
 	locale-gen en_US en_US.UTF-8  && \
 	update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
 	export LANG=en_US.UTF-8

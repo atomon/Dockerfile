@@ -1,6 +1,8 @@
 FROM nvidia/cuda:11.1-devel-ubuntu20.04
 
-RUN apt update && \
+RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
+    echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+    apt update && \
     apt install -y python3 python3-pip && \
     pip3 install torch torchvision matplotlib
 
