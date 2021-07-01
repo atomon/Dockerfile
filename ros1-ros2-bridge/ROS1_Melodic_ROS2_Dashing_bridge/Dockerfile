@@ -9,34 +9,34 @@ ARG ros2_ver=dashing
 ### ROS1 Install ###
 RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
     echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
-    apt update && apt upgrade && \
-    export ROS_DISTRO=ros1_ver && \
+    apt update && \
     apt install -y git tmux vim lsb-release curl gnupg2
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
     apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
+ENV ROS1_DISTRO=$ros1_ver
 RUN apt update && \
-    apt install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-turtlesim ros-$ROS_DISTRO-rosserial ros-$ROS_DISTRO-rosserial-arduino python-rosdep python-catkin-tools && \
+    apt install -y ros-$ROS1_DISTRO-desktop-full ros-$ROS1_DISTRO-turtlesim ros-$ROS1_DISTRO-rosserial ros-$ROS1_DISTRO-rosserial-arduino python-rosdep python-catkin-tools && \
     rosdep init && \
     rosdep update && \
     mkdir -p ~/catkin_ws/src && \
     cd ~/catkin_ws && \
-    catkin build
+    /bin/bash -c "source /opt/ros/$ROS1_DISTRO/setup.bash; catkin build"
     
 
 ### ROS2 Install ###
 # 5 row execute zenntei
 RUN apt update && \
-    export ROS2_DISTRO=ros2_ver && \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
     sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list'
 
+ENV ROS2_DISTRO=$ros2_ver
 RUN apt update && \
-    apt install -y ros-$ROS2_DISTRO-desktop ros-$ROS2_DISTRO-ros-1bridge python3-colcon-common-extensions python3-argcomplete python3-vcstool && \
+    apt install -y ros-$ROS2_DISTRO-desktop ros-$ROS2_DISTRO-ros-1bridge python3-colcon-common-extensions python3-argcomplete python3-vcstool python3-rosdep && \
     mkdir -p ~/ros2_ws/src && \
     cd ~/ros_ws && \
-    colcon build
+    /bin/bash -c "source /opt/ros/$ROS2_DISTRO/setup.bash; colcon build --symlink-install"
     
 
 ### Before execute commands, following execute two comands###
