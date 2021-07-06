@@ -16,9 +16,10 @@ ROS distribution supports Dashing and Melodic.
     To run a docker container based on my/image:
     ```bash:bash
     $ docker run -it \
-                 --name ROS1_Melodic_ROS2_Dashing_bridge \
+                 --name ROS1_Melodic_ROS2_Dashing_bridge_GPU \
                  -v /tmp/.X11-unix:/tmp/.X11-unix \
                  -e DISPLAY=$DISPLAY \
                  -e QT_X11_NO_MITSHM=1 \
-                 my/ros-bridge:melodic-dashing /bin/bash
+                 --gpus all \
+                 my/ros-bridge:melodic-dashing_gpu /bin/bash
     ```
