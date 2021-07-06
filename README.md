@@ -7,8 +7,10 @@ ROS distribution supports Melodic, Dassing and Foxy.
 - ### **Pytorch**  
     |Tags|Detail|Link|doc|
     |:--|:--|:--:|:--:|
+    |Pytorch|CPU only|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch/README.md)|
+    |Pytorch_JupyterLab|CPU only<br>Include JupyterLab|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_JupyterLab)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_JupyterLab/README.md)|
     |Pytorch_GPU|Using Nvidia GPUs|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU/README.md)|
-    |Pytorch_GPU_JupyterLab|Include JupyterLab|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU_JupyterLab)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU_JupyterLab/README.md)| 
+    |Pytorch_GPU_JupyterLab|Using Nvidia GPUs<br>Include JupyterLab|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU_JupyterLab)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/pytorch/Pytorch_GPU_JupyterLab/README.md)| 
 - ### **ROS1**
     |Tags|Detail|Link|doc|
     |:--|:--|:--:|:--:|
@@ -18,8 +20,8 @@ ROS distribution supports Melodic, Dassing and Foxy.
 - ### **ROS2**
     |Tags|Detail|Link|doc|
     |:--|:--|:--:|:--:|
-    |xxx|supports Dashing and Foxy<br>CPU only|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2/README.md)|
-    |xxx_gpu|supports Dashing and Foxy<br>Using Nvidia GPUs|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2_GPU)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2_GPU/README.md)|
+    |xxx|CPU only<br>supports Dashing and Foxy|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2/README.md)|
+    |xxx_gpu|Using Nvidia GPUs<br>supports Dashing and Foxy|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2_GPU)|[●●●](https://github.com/cycling-Ohnishi/Dockerfile/tree/main/ros2/ROS2_GPU/README.md)|
 - ### **ROS1-ROS2-Bridge**
     |Tags|Detail|Link|doc|
     |:--|:--|:--:|:--:|
