@@ -29,6 +29,7 @@ ROS2 distribution supports Dashing and Foxy.
                  -e QT_X11_NO_MITSHM=1 \
                  my/ros:foxy /bin/bash
     ```
+    &nbsp;&nbsp;or  
     To run a docker container based on my/image(in the case of Dashing):
     ```bash:bash
     $ docker run -it \
