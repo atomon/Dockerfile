@@ -1,7 +1,7 @@
 #### Install ROS1(melodic) & ROS2(dashing) on ubuntu18.04 ####
 ## docker build option: --build-arg ros1_ver=noetic ros2_ver=foxy
 
-FROM ubuntu:18.04
+FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu18.04
 
 ARG ros1_ver=melodic 
 ARG ros2_ver=dashing

@@ -2,13 +2,13 @@
 ###  Install ROS2 on ubuntu ###
 #
 ## build
-# $ docker build -t my/ros-gpu:foxy .
+# $ docker build -t my/ros:foxy .
 #
 ## docker build option: --build-arg ros1_ver=noetic and --build-arg ubuntu_ver=20.04
-# $ docker build -t my/ros-gpu:dashing --build-arg ros2_ver=dashing --build-arg ubuntu_ver=18.04 .
+# $ docker build -t my/ros:dashing --build-arg ros2_ver=dashing --build-arg ubuntu_ver=18.04 .
 #
 ## run
-# $ docker run -it --name ROS_Foxy_GPU  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 --gpus all my/ros-gpu:foxy /bin/bash
+# $ docker run -it --name ROS_Foxy  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 my/ros:foxy /bin/bash
 #
 #######################################################################################################################################################################################
 
@@ -16,7 +16,7 @@
 
 ARG ubuntu_ver=20.04
 
-FROM nvidia/opengl:1.2-glvnd-runtime-ubuntu$ubuntu_ver
+FROM ubuntu:$ubuntu_ver
 
 
 ENV TURTLEBOT3_MODEL=waffle
@@ -32,7 +32,7 @@ RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
 	export LANG=en_US.UTF-8
 #RUN locale  ## verify settingsRUN apt update
 
-RUN apt update && apt install -y curl gnupg2 lsb-release tmux vim git wget python3-pip python3-vcstool&& \
+RUN apt update && apt install -y curl gnupg2 lsb-release tmux vim git wget python3-pip python3-vcstools&& \
 	curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
 	sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list' && \
 	apt update
