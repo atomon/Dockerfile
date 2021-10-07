@@ -30,6 +30,7 @@ ROS2 distribution supports Dashing and Foxy.
                  --gpus all \
                  my/ros:foxy_gpu /bin/bash
     ```
+    &nbsp;&nbsp;or  
     To run a docker container based on my/image(in the case of Dashing):
     ```bash:bash
     $ docker run -it \
