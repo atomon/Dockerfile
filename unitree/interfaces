@@ -1,0 +1,4 @@
+auto enx00e04c68095d
+iface enx00e04c68095d inet static
+address 192.168.123.162
+netmask 255.255.255.0
