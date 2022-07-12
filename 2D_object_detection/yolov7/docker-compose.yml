@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  yolov7:
+    build: .
+    #image: nvcr.io/nvidia/pytorch:21.08-py3
+    container_name: yolov7
+    hostname: yolov7
+    shm_size: 6gb
+    tty: true
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    privileged: true
+    volumes:
+      - ./home:/home
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+    
+# コンテナ間で通信をするため，仮想ネットワーク(192.168.123.0)を作成.
+# 各コンテナにip addressを割り振ることで, host-firewallを経由することなく，直接通信ができる
+# ref:https://knowledge.sakura.ad.jp/26522/
+# ref(option):https://sleepless-se.net/2019/09/15/multi-docker-compose-network-setting/
