@@ -6,7 +6,7 @@ This is for building a ODE enviroment.
     ```bash:bash
     $ git clone https://github.com/cycling-Ohnishi/Dockerfile.git
     ```
-    To build the ROS-Foxy(default):
+    To build the ODE:
     ```bash:bash
     $ docker build -t my/ode:0.16.3 Dockerfile/simulation/ODE
     ```
