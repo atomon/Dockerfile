@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  WiringPi:
+    build: .
+    image: my/wiringpi:latest
+    container_name: WiringPi
+    hostname: WiringPi
+    tty: true
+    privileged: true
+    volumes:
+      - ./src:/home/src
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
+      
+
+## How to do
+# docker-compose up --build
+# echo export service=WiringPi >> ~/.bashrc
+# da  # alias 設定より (docker-compose start)
+# db  # 同じく (docker-compose exec WiringPi bash)
