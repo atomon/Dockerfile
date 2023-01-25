@@ -3,9 +3,9 @@ This is for building a WiringPi enviroment.
 
 1. ## Using Docker-Compose
     1. Build & Run
-        ```
+        ```bash:bash
         $ git clone https://github.com/atomon/Dockerfile.git
-        $ cd Dockerfile/raspberry=pi/WiringPi/
+        $ cd Dockerfile/raspberry-pi/WiringPi/
         $ docker-compose up --build -d
         $ docker-compose exec WiringPi bash
         ```
@@ -18,7 +18,7 @@ This is for building a WiringPi enviroment.
         ```
         Build:
         ```bash:bash
-        $ docker build -t my/wiringpi:latest Dockerfile/raspberry=pi/WiringPi/
+        $ docker build -t my/wiringpi:latest Dockerfile/raspberry-pi/WiringPi/
         ```
 
     2. ### Run a Docker container based on image
