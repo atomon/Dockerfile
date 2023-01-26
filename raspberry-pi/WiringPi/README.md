@@ -18,7 +18,7 @@ This is for building a WiringPi enviroment.
         ```
         Build:
         ```bash:bash
-        $ docker build -t my/wiringpi:latest Dockerfile/raspberry=pi/WiringPi/
+        $ docker build -t my/wiringpi:latest Dockerfile/raspberry-pi/WiringPi/
         ```
 
     2. ### Run a Docker container based on image
