@@ -5,7 +5,7 @@ This is for building a WiringPi enviroment.
     1. Build & Run
         ```
         $ git clone https://github.com/atomon/Dockerfile.git
-        $ cd Dockerfile/raspberry=pi/WiringPi/
+        $ cd Dockerfile/raspberry-pi/WiringPi/
         $ docker-compose up --build -d
         $ docker-compose exec WiringPi bash
         ```
