@@ -33,9 +33,9 @@ RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
 #RUN locale  ## verify settingsRUN apt update
 
 RUN apt update && apt install -y curl gnupg2 lsb-release tmux vim git wget python3-pip python3-vcstool&& \
-	curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
-	sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list' && \
-	apt update
+	curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+	apt update && apt upgrade
 	
 	
 ARG ros2_ver=foxy
