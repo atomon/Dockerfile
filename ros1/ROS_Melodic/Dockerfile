@@ -18,9 +18,9 @@ ENV ROS_DISTRO=melodic
 ENV DEBIAN_FRONTEND=noninteractive
 
 ### ROS1 Install ###
-RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
-    echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
-    apt update && \
+# RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
+#     echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+RUN apt update && apt upgrade -y && \
     apt install -y git tmux vim liburdfdom-tools lsb-release curl gnupg2
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
@@ -33,7 +33,6 @@ RUN apt update && \
     rosdep update && \
     mkdir -p /home/ros1_ws/src && \
     cd /home/ros1_ws && \
-    ls src && \
     /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; catkin build" && \
     echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
     echo "source /home/ros1_ws/devel/setup.bash" >> ~/.bashrc && \
@@ -41,7 +40,7 @@ RUN apt update && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     echo "succesfully"
-	
+
 WORKDIR /home/ros1_ws
 
 
