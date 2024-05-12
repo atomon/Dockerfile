@@ -11,11 +11,12 @@
 
 
 
-FROM ubuntu:18.04
+ARG ubuntu_ver=18.04
+FROM ubuntu:$ubuntu_ver
 
 
-ENV ROS_DISTRO=melodic
 ENV DEBIAN_FRONTEND=noninteractive
+
 
 ### ROS1 Install ###
 # RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
@@ -25,6 +26,10 @@ RUN apt update && apt upgrade -y && \
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
+
+
+ARG ros1_ver=melodic
+ENV ROS_DISTRO=$ros1_ver
 
 RUN apt update && \
     apt install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-rosserial ros-$ROS_DISTRO-rosserial-arduino python-rosdep python-catkin-tools && \
