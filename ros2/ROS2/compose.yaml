@@ -1,0 +1,18 @@
+services:
+  ros-humble:
+    build:
+      context: .
+      args:
+        base_image: "ubuntu:22.04"
+        ros2_ver: "humble"
+    image: my/ros:humble
+    container_name: ros-humble
+    hostname: ros-humble
+    working_dir: /home/ros2_ws
+    tty: true
+    volumes:
+      - ./ros2_ws:/home/ros2_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
