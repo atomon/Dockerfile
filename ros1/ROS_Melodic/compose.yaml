@@ -1,11 +1,10 @@
 services:
-  ros_melodic:
+  ros-melodic:
     build:
       context: .
       args:
-        ubuntu_ver: "18.04"
-        ros1_ver: "melodic"
-    image: myros:melodic
+        base_image: "ubuntu:18.04"
+    image: my/ros:melodic
     container_name: ros-melodic
     hostname: ros-melodic
     working_dir: /home/ros1_ws

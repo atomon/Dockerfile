@@ -11,8 +11,8 @@
 
 
 
-ARG ubuntu_ver=18.04
-FROM ubuntu:$ubuntu_ver
+ARG base_image=ubuntu:18.04
+FROM $base_image
 
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -28,17 +28,14 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main"
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
 
 
-ARG ros1_ver=melodic
-ENV ROS_DISTRO=$ros1_ver
+ENV ROS_DISTRO=melodic
 
 RUN apt update && \
-    apt install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-rosserial ros-$ROS_DISTRO-rosserial-arduino python-rosdep python-catkin-tools && \
+    apt install -y ros-$ROS_DISTRO-desktop-full ros-$ROS_DISTRO-rosserial ros-$ROS_DISTRO-rosserial-arduino \
+    python-rosdep python-catkin-tools python-rospkg && \
     echo "ros installed" && \
     rosdep init && \
     rosdep update && \
-    mkdir -p /home/ros1_ws/src && \
-    cd /home/ros1_ws && \
-    /bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; catkin build" && \
     echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
     echo "source /home/ros1_ws/devel/setup.bash" >> ~/.bashrc && \
     apt update && \
@@ -48,6 +45,9 @@ RUN apt update && \
 
 WORKDIR /home/ros1_ws
 
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
 
 
 ### apt install package detail ###
