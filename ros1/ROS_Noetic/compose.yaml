@@ -1,0 +1,18 @@
+services:
+  ros-noetic:
+    build:
+      context: .
+      args:
+        ubuntu_ver: "20.04"
+        ros1_ver: "noetic"
+    image: my/ros:noetic
+    container_name: ros-noetic
+    hostname: ros-noetic
+    working_dir: /home/ros1_ws
+    tty: true
+    volumes:
+      - ./ros1_ws:/home/ros1_ws
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - QT_X11_NO_MITSHM=1
