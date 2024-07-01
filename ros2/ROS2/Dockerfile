@@ -2,65 +2,96 @@
 ###  Install ROS2 on ubuntu ###
 #
 ## build
-# $ docker build -t my/ros:foxy .
+# $ docker build -t my/ros:jazzy .
 #
-## docker build option: --build-arg ros1_ver=noetic and --build-arg ubuntu_ver=20.04
-# $ docker build -t my/ros:dashing --build-arg ros2_ver=dashing --build-arg ubuntu_ver=18.04 .
+## docker build option: ubuntu_ver, ros2_ver
+# $ docker build -t my/ros:dashing  --build-arg ubuntu_ver=18.04 --build-arg ros2_ver=dashing .
 #
 ## run
-# $ docker run -it --name ROS_Foxy  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 my/ros:foxy /bin/bash
+# $ docker run -it --name ROS_Jazzy  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$DISPLAY -e QT_X11_NO_MITSHM=1 my/ros:jazzy /bin/bash
 #
 #######################################################################################################################################################################################
 
 
+ARG ubuntu_ver=24.04
+ARG base_image=ubuntu:$ubuntu_ver
 
-ARG ubuntu_ver=20.04
-
-FROM ubuntu:$ubuntu_ver
+FROM $base_image
 
 
 ENV TURTLEBOT3_MODEL=waffle
 ENV DEBIAN_FRONTEND=noninteractive
 
+SHELL ["/bin/bash", "-c"]
 
-#RUN locale  ## check for UTF-8  https://hub.docker.com/r/nvidia/opengl
-RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
-    echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
-	apt update && apt install locales && \
+#########################################
+## Bad Proxy measures
+## Set locale [UTF-8]
+## Ubuntu Universe repository is enabled
+#########################################
+# RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
+#     echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+RUN apt update && apt install locales && \
 	locale-gen en_US en_US.UTF-8  && \
 	update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
 	export LANG=en_US.UTF-8
-#RUN locale  ## verify settingsRUN apt update
+# RUN locale  ## verify settings (check for UTF-8)
 
-RUN apt update && apt install -y curl gnupg2 lsb-release tmux vim git wget python3-pip python3-vcstool&& \
-	curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add - && \
-	sh -c 'echo "deb [arch=$(dpkg --print-architecture)] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" > /etc/apt/sources.list.d/ros2-latest.list' && \
-	apt update
-	
-	
-ARG ros2_ver=foxy
+
+##################
+## Install variety
+##################
+RUN apt update && apt install -y curl gnupg2 lsb-release tmux vim git wget locate python3-pip python3-flake8-docstrings && \
+	updatedb
+
+
+######################################
+## Install vertual env for python 3.12
+######################################
+ENV PYENV_ROOT=/root/.pyenv
+ENV PATH=/root/.pyenv/shims:$PYENV_ROOT/bin:$PATH
+
+RUN apt update && \
+    apt install -y git curl build-essential libffi-dev libssl-dev zlib1g-dev liblzma-dev libbz2-dev \
+    libreadline-dev libsqlite3-dev libncursesw5-dev libxml2-dev libxmlsec1-dev tk-dev xz-utils && \
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv && \
+    cd ~/.pyenv && src/configure && make -C src && \
+    echo 'eval "$(pyenv init -)"' >> ~/.bashrc && \
+    eval "$(pyenv init -)" && \
+    pyenv install 3.12 && pyenv global 3.12
+
+
+#########################################
+## Download the ROS2 GPG key
+## Add the repository to your sources list
+#########################################
+RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
+	echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
+	apt update && apt upgrade``
+
+
+#######################################################################################
+## Install ROS2(Humble etc..) and turtlesim and teleop-twist-keyboard and Tool for ROS2
+#######################################################################################
+ARG ros2_ver=jazzy
 ENV ROS_DISTRO=$ros2_ver
 
-#Indtall ROS2(Foxy etc..) and Install Tool for ROS2 and setup script の自動実行 and Install turtlesim and gazebo and Install ros2_example and turtulebot3_gazebo(waffle or burger)
-RUN apt install -y ros-$ROS_DISTRO-desktop ros-$ROS_DISTRO-turtlesim ros-$ROS_DISTRO-gazebo-ros-pkgs \
-	python3-rosdep python3-argcomplete python3-colcon-common-extensions && \
+RUN apt install -y ros-$ROS_DISTRO-desktop ros-$ROS_DISTRO-turtlesim ros-$ROS_DISTRO-teleop-twist-keyboard ros-dev-tools && \
+	python3 -m pip install -U argcomplete colcon-common-extensions vcstools && \
 	echo "ros installed" && \
-    rosdep init && \
-    rosdep update && \
-	mkdir -p /home/ros2_ws/src && cd /home/ros2_ws && \
-	/bin/bash -c "source /opt/ros/$ROS_DISTRO/setup.bash; colcon build --symlink-install" && \
+	rosdep init && \
+	rosdep update && \
 	echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> ~/.bashrc && \
 	echo "source /home/ros2_ws/install/setup.bash" >> ~/.bashrc && \
 	echo "source /home/ros2_ws/install/local_setup.bash" >> ~/.bashrc && \
-	apt update && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    echo "succesfully"
-	
+	apt update && apt clean && \
+	rm -rf /var/lib/apt/lists/* && \
+	echo "succesfully"
+
 WORKDIR /home/ros2_ws
 
 
-	
+
 #apt install ros-melodic-joint-state-publisher-gui
 #vcs import src < turtlebot3.repos
 #git clone -b ros2 https://github.com/ROBOTIS-GIT/turtlebot3_simulations.git && \
