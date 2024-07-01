@@ -3,7 +3,8 @@ services:
     build:
       context: .
       args:
-        base_image: "ubuntu:20.04"
+        ubuntu_ver: "20.04"
+        ros1_ver: "noetic"
     image: my/ros:noetic
     container_name: ros-noetic
     hostname: ros-noetic
