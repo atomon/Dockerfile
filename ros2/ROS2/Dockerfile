@@ -90,6 +90,9 @@ RUN apt install -y ros-$ROS_DISTRO-desktop ros-$ROS_DISTRO-turtlesim ros-$ROS_DI
 
 WORKDIR /home/ros2_ws
 
+COPY ./entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/bin/bash", "-c", "/entrypoint.sh"]
+
 
 
 #apt install ros-melodic-joint-state-publisher-gui
