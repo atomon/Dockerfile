@@ -91,7 +91,7 @@ RUN apt install -y ros-$ROS_DISTRO-desktop ros-$ROS_DISTRO-turtlesim ros-$ROS_DI
 WORKDIR /home/ros2_ws
 
 COPY ./entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/bin/bash", "-c", "/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "chmod 555 /entrypoint.sh && $_"]
 
 
 
