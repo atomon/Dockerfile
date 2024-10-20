@@ -22,7 +22,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # RUN touch /etc/apt/apt.conf.d/99fixbadproxy && \
 #     echo "Acquire::http::Pipeline-Depth 0; Acquire::http::No-Cache true; Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
 RUN apt update && apt upgrade -y && \
-    apt install -y git tmux vim liburdfdom-tools lsb-release curl gnupg2
+    apt install -y git tmux vim liburdfdom-tools lsb-release curl gnupg2 net-tools wget curl locate
 
 RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list' && \
     curl -s https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc | apt-key add -
