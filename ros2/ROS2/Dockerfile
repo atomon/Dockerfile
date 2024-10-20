@@ -58,7 +58,7 @@ RUN apt update && \
     cd ~/.pyenv && src/configure && make -C src && \
     echo 'eval "$(pyenv init -)"' >> ~/.bashrc && \
     eval "$(pyenv init -)" && \
-    pyenv install 3.12 && pyenv global 3.12
+    pyenv install 3.12 && pyenv global system
 
 
 #########################################
