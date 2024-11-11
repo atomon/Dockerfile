@@ -10,6 +10,8 @@ services:
     hostname: ros-noetic
     working_dir: /home/ros1_ws
     tty: true
+    devices:
+      - /dev/dri:/dev/dri
     volumes:
       - ./ros1_ws:/home/ros1_ws
       - /tmp/.X11-unix:/tmp/.X11-unix
